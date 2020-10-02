@@ -80,7 +80,7 @@ Step-by-step instructions:
 1. **Enable Trigger**
 1. Click **Add**
 
-## 1. Copy the Code
+## 5. Copy the Code
 
 1. Select the lambda function
 1. In the code editor copy the contents of `okta-logs-to-humio.py` from the repo into the editor
