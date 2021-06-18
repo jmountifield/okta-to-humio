@@ -18,7 +18,6 @@ HTTP = urllib3.PoolManager()
 CONFIG = [
     "okta-org-host",
     "okta-api-key",
-    "working-dir",
     "timeout",
 ]
 
