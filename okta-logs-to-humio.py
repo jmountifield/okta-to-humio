@@ -5,6 +5,7 @@ import re
 import boto3
 import urllib3
 import urllib.parse
+import time
 
 
 # Initialise the urllib3 pool manager, as we need it for all execution paths on
@@ -72,10 +73,20 @@ def get_okta_logs(url, okta_api_key):
 
 def get_next_url(response):
     """parses the "next" url from the okta response"""
-    for link in response.headers['Link'].split(','):
-        if "next" in link:
-            url_match = re.search('<(https://.+)>;', link)
-            return url_match.group(1)
+    try:
+        for link in response.headers['Link'].split(','):
+            if "next" in link:
+                url_match = re.search('<(https://.+)>;', link)
+                return url_match.group(1)
+    except KeyError as e:
+        error_response = json.loads(response.data.decode('utf8'))
+        if error_response["errorCode"] == "E0000047":
+            sys.stderr.write("ERROR: Okta API Rate Limit Exceeded, exiting.\n")
+        else:
+            sys.stderr.write("Unknown Error occured from Okta API, details:\n")
+            sys.stderr.write(response.data.decode('utf8'))
+            sys.stderr.write("\n")
+        sys.exit(1)
     # No "next" link found (there should always be a next link!)
     return None
 
@@ -132,7 +143,7 @@ def lambda_handler(event=None, context=None):
     # and we haven't reached the end of the available records from the okta api
     # we fetch logs and send them to Humio, keeping track of the last URL
     # used in DynamoDB
-    while context.get_remaining_time_in_millis() > 10000 and response_length == 100:
+    while context.get_remaining_time_in_millis() > 15000 and response_length == 100:
 
         # Read the data from Okta
         data, response_length, okta_url = get_okta_logs(okta_url, config['OKTA_API_KEY'])
@@ -163,3 +174,6 @@ def lambda_handler(event=None, context=None):
             sys.stderr.write("ERROR: Sending data to Humio timed out, aborting.\n")
             sys.stderr.write(str(error))
             sys.exit(2)
+
+        # Slow down the request rate to Okta as it will complain if too quick
+        time.sleep(5)
