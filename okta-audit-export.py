@@ -16,8 +16,6 @@ STARTTIME = datetime.datetime.now()
 HTTP = urllib3.PoolManager()
 
 CONFIG = [
-    "humio-server",
-    "humio-token",
     "okta-org-host",
     "okta-api-key",
     "working-dir",
@@ -135,41 +133,6 @@ def get_okta_logs(config):
     return events, get_next_url(response)
 
 
-def send_okta_logs(config, events):
-    # Prepare the Humio headers and URL
-    humio_headers = {
-        "Authorization": "Bearer " + config["humio-token"],
-        "Content-Type": "application/json",
-    }
-    humio_structured_url = urllib.parse.urljoin(
-        config["humio-server"], "/api/v1/ingest/humio-structured"
-    )
-
-    # Build the structured payload for Humio
-    payload = [{"tags": {"source": "okta-audit"}, "events": []}]
-    for event in events:
-        payload[0]["events"].append(
-            {"timestamp": event["published"], "attributes": event}
-        )
-    try:
-        # Push the data to Humio
-        HTTP.request(
-            "POST",
-            humio_structured_url,
-            body=json.dumps(payload).encode("utf-8"),
-            timeout=5,
-            headers=humio_headers,
-        )
-    except Exception as error:
-        # TODO: This needs to capture more/all error conditions from the POST
-        # Attempt to send the data to Humio failed in the timeout specified.
-        # So we need to abort at this point and not record the continuation
-        # url
-        sys.stderr.write("ERROR: Sending data to Humio timed out, aborting.\n")
-        sys.stderr.write(str(error))
-        sys.exit(2)
-
-
 def get_next_url(response):
     """parses the "next" url from the okta response"""
     try:
@@ -225,9 +188,10 @@ case please delete the file {PID_FILE} and try again.\n"
             sys.stderr.write("No new audit messages to process, exiting.\n")
             break
 
-        # Send the events to Humio
-        sys.stderr.write("Sending %d events to Humio ..." % len(data))
-        send_okta_logs(config, data)
+        # Print events as NDJSON to stdout
+        sys.stderr.write("Printing %d events to stdout ..." % len(data))
+        for event in data:
+            print(event)
         sys.stderr.write(" done.\n")
 
         # Update the config with the latest checkpoint data
