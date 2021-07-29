@@ -190,7 +190,8 @@ case please delete the file {PID_FILE} and try again.\n"
         # Print events as NDJSON to stdout
         sys.stderr.write("Printing %d events to stdout ..." % len(data))
         for event in data:
-            print(event)
+            sys.stdout.write(json.dumps(event))
+            sys.stdout.write("\n")
         sys.stderr.write(" done.\n")
 
         # Update the config with the latest checkpoint data
