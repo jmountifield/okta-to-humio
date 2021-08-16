@@ -161,7 +161,6 @@ if __name__ == "__main__":
             f"It looks like this script is already running! If you are certain that is not the \
 case please delete the file {PID_FILE} and try again.\n"
         )
-        sys.exit(99)
 
     # Capture "now" so we can measure timeout
     startTime = datetime.datetime.now()
