@@ -171,7 +171,7 @@ case please delete the file {PID_FILE} and try again.\n"
 
     # Load the config file
     config = load_config(args["config-file"])
-    sys.stderr.write(json.dumps(config, indent=4, sort_keys=True) + "\n")
+    # sys.stderr.write(json.dumps(config, indent=4, sort_keys=True) + "\n")
 
     # The main loop where we process batches of events from Okta so long as the timeout hasn't been reached
     while datetime.datetime.now() < (
