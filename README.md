@@ -83,13 +83,13 @@ Step-by-step instructions:
 ## 5. Copy the Code
 
 1. Select the lambda function
-1. In the code editor("Code Source"), copy the contents of `okta-logs-to-humio.py` from the repo into the editor
+1. In the code editor("Code source"), copy the contents of `okta-logs-to-humio.py` from the repo into the editor
 1. **Click Save**
 1. Make sure the python script in the lambda is named `okta-logs-to-humio.py` (note: default is `lambda_function.py`)
 
 ### Setup the Environment Variables
 
-1. Under “Environment Variables” add:
+1. Under "Configuration" -> “Environment Variables”, add:
 
 	| Variable Name | Example Value | Description |
 	|---|---|---|
@@ -100,10 +100,10 @@ Step-by-step instructions:
 	| `OKTA_API_KEY` | `00XXXXX_wjkbJksue789s7s99d-0QrGh3jj12rAQ` | API key generated for Okta Access |
 
 
-2. Under “Basic Settings” configure the timeout for the function to two (2) minutes.
+2. Under "Configuration" -> "General configuration" -> “Basic Settings”, configure the timeout for the function to two (2) minutes.
 
-3. In the "Runtime settings" area, set the handler to `okta-logs-to-humio.lambda_handler`
+3. Under "Code" -> "Runtime settings" area, set the handler to `okta-logs-to-humio.lambda_handler`
 
-4. In the "Code source" area, go to "File" and click **Save All**. Click the "Deploy" dialog box to finalize the function.
+4. Under "Code" -> "Code source" area, go to "File" and click **Save All**. Click the "Deploy" dialog box to finalize the function.
 
 NOTE: Data will be transferred once the first scheduled execution of the function takes place, or you can run a `Test` of the function with any/default test event payload.
