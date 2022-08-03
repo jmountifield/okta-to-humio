@@ -94,15 +94,15 @@ Step-by-step instructions:
 	| Variable Name | Example Value | Description |
 	|---|---|---|
 	| `DDB_TABLE` | `okta-to-humio` | The DynamoDB table name |
-	| `HUMIO_SERVER ` | `https://cloud.humio.com/` | URL for Humio instance |
-	| `HUMIO_TOKEN ` | `ebe59567-74eb-4b3c-8949-017450515612` | Ingest token from Humio |
-	| `OKTA_ORG_URL ` | `https://myorg.okta.com` | The URL of your Okta instance |
-	| `OKTA_API_KEY ` | `00XXXXX_wjkbJksue789s7s99d-0QrGh3jj12rAQ` | API key generated for Okta Access |
+	| `HUMIO_SERVER` | `https://cloud.humio.com/` or `https://cloud.community.humio.com/` | URL for Humio instance |
+	| `HUMIO_TOKEN` | `ebe59567-74eb-4b3c-8949-017450515612` | Ingest token from Humio |
+	| `OKTA_ORG_URL` | `https://myorg.okta.com` | The URL of your Okta instance |
+	| `OKTA_API_KEY` | `00XXXXX_wjkbJksue789s7s99d-0QrGh3jj12rAQ` | API key generated for Okta Access |
 
 
 2. Under “Basic Settings” configure the timeout for the function to two (2) minutes.
 
-3. In the "Runtime settings" area, set the handler to "okta-logs-to-humio.lambda_handler”
+3. In the "Runtime settings" area, set the handler to `okta-logs-to-humio.lambda_handler`
 
 4. In the "Code source" area, go to "File" and click **Save All**. Click the "Deploy" dialog box to finalize the function.
 
