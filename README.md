@@ -83,26 +83,27 @@ Step-by-step instructions:
 ## 5. Copy the Code
 
 1. Select the lambda function
-1. In the code editor copy the contents of `okta-logs-to-humio.py` from the repo into the editor
+1. In the code editor("Code source"), copy the contents of `okta-logs-to-humio.py` from the repo into the editor
 1. **Click Save**
 1. Make sure the python script in the lambda is named `okta-logs-to-humio.py` (note: default is `lambda_function.py`)
 
 ### Setup the Environment Variables
 
-1. Under “Environment Variables” add:
+1. Under "Configuration" -> “Environment Variables”, add:
 
 	| Variable Name | Example Value | Description |
 	|---|---|---|
 	| `DDB_TABLE` | `okta-to-humio` | The DynamoDB table name |
-	| `HUMIO_SERVER ` | `https://cloud.humio.com/` | URL for Humio instance |
-	| `HUMIO_SERVER ` | `ebe59567-74eb-4b3c-8949-017450515612` | Ingest token from Humio |
-	| `OKTA_ORG_URL ` | `https://myorg.okta.com` | The URL of your Okta instance |
-	| `OKTA_API_KEY ` | `00XXXXX_wjkbJksue789s7s99d-0QrGh3jj12rAQ` | API key generated for Okta Access |
+	| `HUMIO_SERVER` | `https://cloud.humio.com/` or `https://cloud.community.humio.com/` | URL for Humio instance |
+	| `HUMIO_TOKEN` | `ebe59567-74eb-4b3c-8949-017450515612` | Ingest token from Humio |
+	| `OKTA_ORG_URL` | `https://myorg.okta.com` | The URL of your Okta instance |
+	| `OKTA_API_KEY` | `00XXXXX_wjkbJksue789s7s99d-0QrGh3jj12rAQ` | API key generated for Okta Access |
 
 
-2. Under “Basic Settings” configure the timeout for the function to two (2) minutes
-For the handler set "okta-logs-to-humio.lambda_handler”
+2. Under "Configuration" -> "General configuration" -> “Basic Settings”, configure the timeout for the function to two (2) minutes.
 
-3. **Click Save**
+3. Under "Code" -> "Runtime settings" area, set the handler to `okta-logs-to-humio.lambda_handler`
+
+4. Under "Code" -> "Code source" area, go to "File" and click **Save All**. Click the "Deploy" dialog box to finalize the function.
 
 NOTE: Data will be transferred once the first scheduled execution of the function takes place, or you can run a `Test` of the function with any/default test event payload.
