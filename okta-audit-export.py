@@ -155,13 +155,6 @@ def get_next_url(response):
 if __name__ == "__main__":
     """Running as a script"""
 
-    # Write the PID file to make sure we know we're running
-    if not write_pid():
-        sys.stderr.write(
-            f"It looks like this script is already running! If you are certain that is not the \
-case please delete the file {PID_FILE} and try again.\n"
-        )
-
     # Capture "now" so we can measure timeout
     startTime = datetime.datetime.now()
 
@@ -171,6 +164,13 @@ case please delete the file {PID_FILE} and try again.\n"
     # Load the config file
     config = load_config(args["config-file"])
     # sys.stderr.write(json.dumps(config, indent=4, sort_keys=True) + "\n")
+
+    # Write the PID file to make sure we know we're running
+    if not write_pid():
+        sys.stderr.write(
+            f"It looks like this script is already running! If you are certain that is not the \
+case please delete the file {PID_FILE} and try again.\n"
+        )
 
     # The main loop where we process batches of events from Okta so long as the timeout hasn't been reached
     while datetime.datetime.now() < (
