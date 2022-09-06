@@ -113,7 +113,7 @@ NOTE: Data will be transferred once the first scheduled execution of the functio
 
 # Humio Log Collector Configuration
 
-Using the same configug examples as above the following cmd/exec input can be used with the Humio Log Collector to collect the events. Note that this is using the okta-audit-export.py script. It assumes that you have placed the `okta-audit-export.py` file in the folder `/root/okta-to-humio/`.
+This repo contains an alternative script that can be used to export Okta audit events. That script is configured using the `config.json`, and should be set up using the same Okta config examples as with the Lambda example (the Humio part of the config moves to the Humio Log Collector). The following cmd/exec input can be used with the Humio Log Collector to collect the events. Note that this is using the okta-audit-export.py script. It assumes that you have placed the `okta-audit-export.py` file in the folder `/root/okta-to-humio/` and that you have copied and updated the values in `config.json`.
 
 /!\ Be sure to check that the user the Humio Log Collector will run as has permissions to execute the command from that location.
 
