@@ -140,5 +140,6 @@ Create a parser for the Okta events with the following content:
 @collect.stream match {
   stdout => parseJson() | parseTimestamp(field="published") ;
   stderr => @timestamp := @ingesttimestamp ;
-}```
+}
+```
 
